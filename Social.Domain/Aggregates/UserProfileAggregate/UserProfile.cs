@@ -16,6 +16,7 @@ namespace Social.Domain.Aggregates.UserProfileAggegate
         public Guid UserProfileId { get; private set; }
         public string IdentityId { get; private set; }
         public BasicInfo BasicInfo { get; private set; }
+        public int FollowersCount { get; private set; }
         public List<RefreshToken> RefreshToken { get; set; } = new();
         public DateTime DateCreated { get; private set; }
         public DateTime LastModified { get; private set; }
@@ -29,6 +30,7 @@ namespace Social.Domain.Aggregates.UserProfileAggegate
             {
                 IdentityId = identityId,
                 BasicInfo = basicInfo,
+                FollowersCount = 0,
                 DateCreated = DateTime.Now,
                 LastModified = DateTime.Now
             };
@@ -40,5 +42,15 @@ namespace Social.Domain.Aggregates.UserProfileAggegate
             BasicInfo = basicInfo;
         }
 
+        public void IncrementFollowers()
+        {
+            FollowersCount++;
+        }
+
+        public void DecrementFollowers()
+        {
+            if (FollowersCount > 0)
+                FollowersCount--;
+        }
     }
 }

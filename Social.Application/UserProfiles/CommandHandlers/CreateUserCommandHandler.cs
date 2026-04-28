@@ -6,11 +6,6 @@ using Social.Application.UserProfiles.Commands;
 using Social.DAL.DbContext;
 using Social.Domain.Aggregates.UserProfileAggegate;
 using Social.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Social.Application.UserProfiles.CommandHandlers
 {

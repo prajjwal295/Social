@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Social.Api.Contracts.Posts.Response;
 using Social.Api.Contracts.UserProfile.Request;
 using Social.Api.Contracts.UserProfile.Response;
 using Social.Api.Extenstions;
 using Social.Api.Filters;
-using Social.Application.Enums;
 using Social.Application.UserProfiles.Commands;
 using Social.Application.UserProfiles.Queries;
 
@@ -124,6 +121,52 @@ namespace Social.Api.Controllers
             {
                 return NoContent();
             }
+        }
+
+        [HttpPost]
+        [Route("{id}/follow")]
+        [ValidateGuid("id")]
+        [ValidateModel]
+        public async Task<IActionResult> FollowUser([FromRoute] string id)
+        {
+            var userProfileId = HttpContext.GetUserProfileIdClaimValue();
+            var command = new FollowUserCommand
+            {
+                FollowerId = userProfileId,
+                FolloweeId = Guid.Parse(id)
+            };
+
+            var response = await _mediator.Send(command);
+
+            if (response.IsError)
+            {
+                return HandleErrorResponse(response.Errors);
+            }
+
+            return Ok(response.Payload);
+        }
+
+        [HttpPost]
+        [Route("{id}/unfollow")]
+        [ValidateGuid("id")]
+        [ValidateModel]
+        public async Task<IActionResult> UnfollowUser([FromRoute] string id)
+        {
+            var userProfileId = HttpContext.GetUserProfileIdClaimValue();
+            var command = new UnfollowUserCommand
+            {
+                FollowerId = userProfileId,
+                FolloweeId = Guid.Parse(id)
+            };
+
+            var response = await _mediator.Send(command);
+
+            if (response.IsError)
+            {
+                return HandleErrorResponse(response.Errors);
+            }
+
+            return Ok(response.Payload);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Social.Application.Common.Events;
+using Social.Application.Common.Interface;
 using Social.Application.Models;
 using Social.Application.Posts.Commands;
 using Social.DAL.DbContext;
@@ -16,10 +18,12 @@ namespace Social.Application.Posts.CommandHandlers
     internal class CreatePostCommandHanlder : IRequestHandler<CreatePostCommand, OperationResult<Post>>
     {
         private readonly DataContext _context;
+        private readonly IEventBus _eventBus;
 
-        public CreatePostCommandHanlder(DataContext context)
+        public CreatePostCommandHanlder(DataContext context, IEventBus eventBus)
         {
             _context = context;
+            _eventBus = eventBus;
         }
 
         public async Task<OperationResult<Post>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
@@ -44,6 +48,18 @@ namespace Social.Application.Posts.CommandHandlers
                 var post = Post.CreatePost(request.UserProfileId, request.TextContent);
                 await _context.Posts.AddAsync(post);
                 await _context.SaveChangesAsync();
+
+                //create event
+                var postCreatedEvent = new PostCreatedEvent
+                {
+                    PostId = post.PostId,
+                    UserId = post.UserProfileId,
+                    Content = post.TextContent,
+                    CreatedAt = post.CreatedDate
+                };
+
+                // publish event
+                await _eventBus.PublishAsync(postCreatedEvent);
 
                 result.Payload = post;
 

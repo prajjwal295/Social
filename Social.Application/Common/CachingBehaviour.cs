@@ -1,15 +1,9 @@
-﻿using Azure.Core;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Social.Application.Caching;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Social.Application.Common
 {

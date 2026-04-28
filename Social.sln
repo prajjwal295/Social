@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36310.24 d17.14
+VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Social.Domain", "Social.Domain\Social.Domain.csproj", "{C1D8E47C-2CEE-4AB1-B808-4AAA03634DC4}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Social.Application", "Social.Application\Social.Application.csproj", "{F9E211AF-D4BC-429B-89ED-2A44EF4394A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Social.Api", "Social.Api\Social.Api.csproj", "{0FB30F39-F141-4FD0-86F4-D05EF6AAD30F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Social.Infrastructure", "Social.Infrastructure\Social.Infrastructure.csproj", "{B5A48B4C-010A-4300-8D90-A803104CB1B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0FB30F39-F141-4FD0-86F4-D05EF6AAD30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FB30F39-F141-4FD0-86F4-D05EF6AAD30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FB30F39-F141-4FD0-86F4-D05EF6AAD30F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A48B4C-010A-4300-8D90-A803104CB1B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A48B4C-010A-4300-8D90-A803104CB1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A48B4C-010A-4300-8D90-A803104CB1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A48B4C-010A-4300-8D90-A803104CB1B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

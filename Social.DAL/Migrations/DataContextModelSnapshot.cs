@@ -190,6 +190,26 @@ namespace Social.DAL.Migrations
                     b.ToTable("UserTokens");
                 });
 
+            modelBuilder.Entity("Social.Domain.Aggregates.CelebrityPostCacheAggregate.CelebrityPostCache", b =>
+                {
+                    b.Property<Guid>("CelebrityPostId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserProfileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CelebrityPostId");
+
+                    b.ToTable("CelebrityPostCache");
+                });
+
             modelBuilder.Entity("Social.Domain.Aggregates.ConversationAggreagate.Conversation", b =>
                 {
                     b.Property<Guid>("ConversationId")
@@ -268,6 +288,32 @@ namespace Social.DAL.Migrations
                     b.HasIndex("ConversationId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Social.Domain.Aggregates.FollowAggregate.Social.Domain.Aggregates.FollowAggregate.Follow", b =>
+                {
+                    b.Property<Guid>("FollowId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FolloweeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FollowerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UnfollowedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("FollowId");
+
+                    b.HasIndex("FollowerId", "FolloweeId")
+                        .IsUnique();
+
+                    b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("Social.Domain.Aggregates.PostAggregate.Post", b =>
@@ -353,6 +399,23 @@ namespace Social.DAL.Migrations
                     b.ToTable("PostInteraction");
                 });
 
+            modelBuilder.Entity("Social.Domain.Aggregates.UserFeedAggregate.UserFeed", b =>
+                {
+                    b.Property<Guid>("UserFeedId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserProfileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserFeedId");
+
+                    b.ToTable("UserFeed");
+                });
+
             modelBuilder.Entity("Social.Domain.Aggregates.UserProfileAggegate.UserProfile", b =>
                 {
                     b.Property<Guid>("UserProfileId")
@@ -361,6 +424,9 @@ namespace Social.DAL.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("FollowersCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("IdentityId")
                         .IsRequired()
@@ -443,6 +509,31 @@ namespace Social.DAL.Migrations
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Social.Domain.Aggregates.UserFeedAggregate.UserFeed", b =>
+                {
+                    b.OwnsMany("Social.Domain.Aggregates.UserFeedAggregate.FeedItem", "FeedItems", b1 =>
+                        {
+                            b1.Property<Guid>("UserFeedId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("PostId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("UserFeedId", "PostId");
+
+                            b1.ToTable("UserFeedItems", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserFeedId");
+                        });
+
+                    b.Navigation("FeedItems");
                 });
 
             modelBuilder.Entity("Social.Domain.Aggregates.UserProfileAggegate.UserProfile", b =>

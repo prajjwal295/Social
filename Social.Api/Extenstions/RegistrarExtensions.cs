@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Social.Api.Registrars;
+﻿using Social.Api.Registrars;
 
 namespace Social.Api.Extensions
 {

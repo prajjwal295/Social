@@ -1,10 +1,5 @@
 ﻿using Social.Domain.Exceptions;
 using Social.Domain.Validators.UserProfileValidators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Social.Domain.Aggregates.UserProfileAggegate
 {
@@ -17,7 +12,6 @@ namespace Social.Domain.Aggregates.UserProfileAggegate
         public string Phone { get; private set; }
         public DateTime DateOfBirth { get; private set; }
         public string CurrentCity { get; private set; }
-
 
         /// <summary>
         /// factory Method

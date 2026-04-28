@@ -1,4 +1,4 @@
-﻿using Social.Api.Hubs;
+﻿//using Social.Api.Hubs;
 
 namespace Social.Api.Registrars
 {

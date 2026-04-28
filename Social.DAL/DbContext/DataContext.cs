@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Social.DAL.Configurations;
 using Social.DAL.DbContext.Interceptors;
+using Social.DAL.Migrations;
+using Social.Domain.Aggregates.CelebrityPostCacheAggregate;
 using Social.Domain.Aggregates.ConversationAggreagate;
+using Social.Domain.Aggregates.FollowAggregate.Social.Domain.Aggregates.FollowAggregate;
 using Social.Domain.Aggregates.PostAggregate;
+using Social.Domain.Aggregates.UserFeedAggregate;
 using Social.Domain.Aggregates.UserProfileAggegate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Social.DAL.DbContext
 {
@@ -29,6 +28,10 @@ namespace Social.DAL.DbContext
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<ConversationParticipant> ConversationParticipants { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<UserFeed> UserFeed { get; set; }
+        public DbSet<FeedItem> FeedItems { get; set; }
+        public DbSet<Follow> Followers { get; set; }
+        public DbSet<Domain.Aggregates.CelebrityPostCacheAggregate.CelebrityPostCache> CelebrityPostCache { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,6 +42,8 @@ namespace Social.DAL.DbContext
             builder.ApplyConfiguration(new IdentityUserRoleConfiguration());
             builder.ApplyConfiguration(new IdentityUserTokenConfiguration());
             builder.ApplyConfiguration(new RefreshTokenConfiguration());
+            builder.ApplyConfiguration(new UserFeedConfiguration());
+            builder.ApplyConfiguration(new FollowConfiguration());
             //builder.ApplyConfiguration(new ConversationParticipantConfiguration());
         }
 

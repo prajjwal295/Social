@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Social.Api.Contracts.Common.Response;
 
 namespace Social.Api.Filters
@@ -17,7 +16,7 @@ namespace Social.Api.Filters
                     {
                         StatusCode = 400,
                         StatusPhase = "Bad Request",
-                        TimeStamp = DateTime.Now
+                        TimeStamp = DateTime.Now,
                     };
 
                     var errors = context.ModelState.AsEnumerable();

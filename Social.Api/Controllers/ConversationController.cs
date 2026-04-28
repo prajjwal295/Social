@@ -9,7 +9,6 @@ using Social.Api.Extenstions;
 using Social.Api.Filters;
 using Social.Application.Conversation.Commands;
 using Social.Application.Conversation.Query;
-using Social.Domain.Aggregates.ConversationAggreagate;
 
 [ApiController]
 [Route("api/[controller]")]

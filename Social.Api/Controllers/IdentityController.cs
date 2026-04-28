@@ -58,7 +58,6 @@ namespace Social.Api.Controllers
             }
 
             SetRefreshTokenInCookie(result.Payload.RefreshToken);
-
             return Ok(result.Payload);
         }
 

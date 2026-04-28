@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,14 +8,8 @@ using Social.Application.Models;
 using Social.Application.Services;
 using Social.DAL.DbContext;
 using Social.Domain.Aggregates.UserProfileAggegate;
-using Social.Domain.Aggregates.UserProfileAggregate;
-using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Social.Application.Identity.Handlers
 {
