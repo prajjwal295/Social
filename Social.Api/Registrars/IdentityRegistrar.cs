@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Social.Application.Options;
+using Social.Infrastructure.Email;
 using System.Text;
 
 namespace Social.Api.Registrars
@@ -15,6 +16,8 @@ namespace Social.Api.Registrars
             builder.Configuration.Bind(nameof(JwtSettings), jwtSettings);
             var jwtSection = builder.Configuration.GetSection(nameof(JwtSettings));
             builder.Services.Configure<JwtSettings>(jwtSection);
+
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("HostEmail"));
 
 
             builder.Services

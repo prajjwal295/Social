@@ -1,29 +1,24 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Social.Application.Common.Events;
-using Social.Application.Common.Interface;
 using Social.Application.Models;
 using Social.Application.Posts.Commands;
 using Social.DAL.DbContext;
 using Social.Domain.Aggregates.PostAggregate;
 using Social.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Social.Infrastructure.Messaging.Events;
 
 namespace Social.Application.Posts.CommandHandlers
 {
     internal class CreatePostCommandHanlder : IRequestHandler<CreatePostCommand, OperationResult<Post>>
     {
         private readonly DataContext _context;
-        private readonly IEventBus _eventBus;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public CreatePostCommandHanlder(DataContext context, IEventBus eventBus)
+        public CreatePostCommandHanlder(DataContext context, IPublishEndpoint publishEndpoint)
         {
             _context = context;
-            _eventBus = eventBus;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<OperationResult<Post>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
@@ -58,8 +53,9 @@ namespace Social.Application.Posts.CommandHandlers
                     CreatedAt = post.CreatedDate
                 };
 
-                // publish event
-                await _eventBus.PublishAsync(postCreatedEvent);
+                //publish event
+                await _publishEndpoint.Publish(postCreatedEvent);
+
 
                 result.Payload = post;
 

@@ -1,19 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Social.Api.Contracts.Posts.Request;
 using Social.Api.Contracts.Posts.Response;
-using Social.Api.Contracts.UserProfile.Response;
 using Social.Api.Extenstions;
 using Social.Api.Filters;
 using Social.Application.Posts.Commands;
 using Social.Application.Posts.Queries;
-using Social.Application.UserProfiles.Queries;
-using Social.Domain.Aggregates.UserProfileAggegate;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Social.Api.Controllers
 {

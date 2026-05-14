@@ -43,6 +43,7 @@ namespace Social.DAL.DbContext
             builder.ApplyConfiguration(new IdentityUserTokenConfiguration());
             builder.ApplyConfiguration(new RefreshTokenConfiguration());
             builder.ApplyConfiguration(new UserFeedConfiguration());
+            builder.ApplyConfiguration(new FeedItemConfiguration());
             builder.ApplyConfiguration(new FollowConfiguration());
             //builder.ApplyConfiguration(new ConversationParticipantConfiguration());
         }

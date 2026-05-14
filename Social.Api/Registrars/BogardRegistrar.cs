@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Social.Api.Mappings;
-using Social.Application.UserProfiles.Queries;
-using MediatR;
 using Social.Application.Common;
+using Social.Application.UserProfiles.Queries;
 
 namespace Social.Api.Registrars
 {
@@ -27,8 +26,10 @@ namespace Social.Api.Registrars
                 });
             });
             builder.Services.AddSignalR();
-            builder.Services.AddAutoMapper(typeof(ProfileMappings).Assembly);
-            builder.Services.AddAutoMapper(typeof(PostMappings).Assembly);
+            builder.Services.AddAutoMapper(cfg => { },
+                typeof(ProfileMappings).Assembly,
+                typeof(PostMappings).Assembly
+            );
             builder.Services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(GetAllUserProfiles).Assembly);

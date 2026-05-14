@@ -1,6 +1,4 @@
-﻿//using Social.Api.Hubs;
-
-namespace Social.Api.Registrars
+﻿namespace Social.Api.Registrars
 {
     public class MvcWebAppRegistrar : IWebApplicationRegistar
     {
@@ -16,7 +14,7 @@ namespace Social.Api.Registrars
             app.UseAuthorization();
 
             app.MapControllers();
-            app.MapHub<ChatHub>("/chathub");
+            // app.MapHub<ChatHub>("/chathub");
         }
     }
 }

@@ -10,16 +10,9 @@ namespace Social.DAL.Configurations
         {
             builder.HasKey(x => x.UserFeedId);
 
-            builder.OwnsMany(x => x.FeedItems, fb =>
-            {
-                fb.WithOwner().HasForeignKey(x => x.UserFeedId);
-
-                fb.HasKey(x => new { x.UserFeedId, x.PostId });
-
-                fb.Property(x => x.CreatedAt).IsRequired();
-
-                fb.ToTable("UserFeedItems");
-            });
+            builder.HasMany(x => x.FeedItems)
+                .WithOne()
+                .HasForeignKey(x => x.UserFeedId);
         }
     }
 }

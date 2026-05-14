@@ -1,4 +1,4 @@
-﻿namespace Social.Application.Common.Events
+﻿namespace Social.Infrastructure.Messaging.Events
 {
     public class PostCreatedEvent
     {

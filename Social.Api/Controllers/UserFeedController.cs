@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Social.Api.Extenstions;
-using Social.Api.Filters;
 using Social.Application.UserFeed.Queries;
 
 namespace Social.Api.Controllers

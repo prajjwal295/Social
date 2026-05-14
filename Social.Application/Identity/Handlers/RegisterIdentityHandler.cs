@@ -1,22 +1,15 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Social.Application.Identity.Commands;
 using Social.Application.Models;
-using Social.Application.Options;
 using Social.Application.Services;
 using Social.DAL.DbContext;
 using Social.Domain.Aggregates.UserProfileAggegate;
 using Social.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
+using Social.Infrastructure.Messaging.Events;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Social.Application.Identity.Handlers
 {
@@ -25,12 +18,14 @@ namespace Social.Application.Identity.Handlers
         private readonly DataContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtService _jwtService;
+        private readonly IPublishEndpoint _publishEndPoint;
 
-        public RegisterIdentityHandler(DataContext context, UserManager<IdentityUser> userManager,  JwtService jwtService)
+        public RegisterIdentityHandler(DataContext context, UserManager<IdentityUser> userManager, JwtService jwtService,IPublishEndpoint publishEndPoint)
         {
             _context = context;
             _userManager = userManager;
             _jwtService = jwtService;
+            _publishEndPoint = publishEndPoint;
         }
 
         public async Task<OperationResult<string>> Handle(RegisterIdentity request, CancellationToken cancellationToken)
@@ -39,7 +34,7 @@ namespace Social.Application.Identity.Handlers
 
             try
             {
-                var existingIdentity = await _userManager.FindByEmailAsync(request.Username);
+                var existingIdentity = await _userManager.FindByEmailAsync(request.EmailAddress);
 
                 if (existingIdentity != null)
                 {
@@ -60,7 +55,7 @@ namespace Social.Application.Identity.Handlers
                 };
 
                 //creating transaction
-                var transaction = _context.Database.BeginTransaction();
+                var transaction = await _context.Database.BeginTransactionAsync();
 
                 var createIdentiy = await _userManager.CreateAsync(identity, request.Password);
 
@@ -97,17 +92,23 @@ namespace Social.Application.Identity.Handlers
                     throw;
                 }
 
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub,identity.Email),
-                        new Claim(JwtRegisteredClaimNames.Jti , Guid.NewGuid().ToString()),
-                        new Claim(JwtRegisteredClaimNames.Email ,identity.Email),
-                        new Claim("IdentityId" , identity.Id),
-                        new Claim("UserProfileId" , profile.UserProfileId.ToString())
-                    });
+                var claims = new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, identity.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, identity.Email),
+                    new Claim("IdentityId", identity.Id),
+                    new Claim("UserProfileId", profile.UserProfileId.ToString())
+                };
 
-                var token = _jwtService.CreateToken(claimsIdentity);
+                var token = _jwtService.CreateToken(new ClaimsIdentity(claims));
                 result.Payload = _jwtService.WriteToken(token);
+                await _publishEndPoint.Publish(new UserRegisteredEvent
+                {
+                    Email = request.EmailAddress,
+                    Username = request.Username,
+                    FirstName = request.FirstName
+                });
                 return result;
             }
             catch (UserProfileNotValidException ex)
