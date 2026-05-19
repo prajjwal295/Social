@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Social.DAL.Configurations;
 using Social.DAL.DbContext.Interceptors;
-using Social.DAL.Migrations;
 using Social.Domain.Aggregates.CelebrityPostCacheAggregate;
 using Social.Domain.Aggregates.ConversationAggreagate;
 using Social.Domain.Aggregates.FollowAggregate.Social.Domain.Aggregates.FollowAggregate;
+using Social.Domain.Aggregates.NotificationAggregate;
 using Social.Domain.Aggregates.PostAggregate;
 using Social.Domain.Aggregates.UserFeedAggregate;
 using Social.Domain.Aggregates.UserProfileAggegate;
@@ -31,7 +31,8 @@ namespace Social.DAL.DbContext
         public DbSet<UserFeed> UserFeed { get; set; }
         public DbSet<FeedItem> FeedItems { get; set; }
         public DbSet<Follow> Followers { get; set; }
-        public DbSet<Domain.Aggregates.CelebrityPostCacheAggregate.CelebrityPostCache> CelebrityPostCache { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<CelebrityPostCache> CelebrityPostCache { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

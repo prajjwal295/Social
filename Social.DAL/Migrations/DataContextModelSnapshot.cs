@@ -316,6 +316,39 @@ namespace Social.DAL.Migrations
                     b.ToTable("Followers");
                 });
 
+            modelBuilder.Entity("Social.Domain.Aggregates.NotificationAggregate.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReceiverUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SenderUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("Social.Domain.Aggregates.PostAggregate.Post", b =>
                 {
                     b.Property<Guid>("PostId")
@@ -570,6 +603,14 @@ namespace Social.DAL.Migrations
                                 .IsRequired()
                                 .HasMaxLength(20)
                                 .HasColumnType("nvarchar(20)");
+
+                            b1.Property<string>("ProfilePicturePublicId")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("ProfilePicutreUrl")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("UserProfileId");
 

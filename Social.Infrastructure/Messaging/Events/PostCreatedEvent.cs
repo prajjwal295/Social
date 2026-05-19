@@ -1,6 +1,6 @@
 ﻿namespace Social.Infrastructure.Messaging.Events
 {
-    public class PostCreatedEvent
+    public record PostCreatedEvent
     {
         public Guid PostId { get; set; }
         public Guid UserId { get; set; }

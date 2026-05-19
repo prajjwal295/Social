@@ -5,11 +5,6 @@ using Social.Application.Models;
 using Social.Application.Posts.Queries;
 using Social.DAL.DbContext;
 using Social.Domain.Aggregates.PostAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Social.Application.Posts.QueryHandlers
 {
@@ -28,8 +23,27 @@ namespace Social.Application.Posts.QueryHandlers
 
             try
             {
-                var posts = await _context.Posts.ToListAsync();
-                result.Payload = posts;
+                var userProfileId = request.UserProfileId;
+
+                if(userProfileId == null)
+                {
+                    var posts = await _context.Posts.ToListAsync();
+                    result.Payload = posts;
+                }
+                else
+                {
+                    var postIds = await _context.UserFeed
+                    .Where(uf => uf.UserProfileId == userProfileId)
+                    .Include(uf => uf.FeedItems)
+                    .SelectMany(uf => uf.FeedItems)
+                    .Select(fi => fi.PostId)
+                    .ToListAsync(cancellationToken);
+
+                    var posts = await _context.Posts.
+                        Where(p => postIds.Contains(p.PostId)).ToListAsync(cancellationToken);
+
+                    result.Payload = posts;
+                }
             }
             catch (Exception ex)
             {

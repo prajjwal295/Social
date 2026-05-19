@@ -76,7 +76,7 @@ namespace Social.Application.Identity.Handlers
                     return result;
                 }
 
-                var profileInfo = BasicInfo.CreateBasicInfo(request.FirstName, request.LastName, request.Username, request.Phone, request.DateOfBirth, request.CurrentCity);
+                var profileInfo = BasicInfo.CreateBasicInfo(request.FirstName, request.LastName, request.Username, request.Phone, request.DateOfBirth, request.CurrentCity, request.ProfilePictureUrl, request.ProfilePicturePublicId);
                 var profile = UserProfile.CreateUserProfile(identity.Id, profileInfo);
 
                 try

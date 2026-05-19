@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Social.Api.Contracts.Identity.Request;
 using Social.Api.Contracts.Identity.Response;
 using Social.Api.Filters;
+using Social.Application.DTO;
 using Social.Application.Identity.Commands;
 
 namespace Social.Api.Controllers
@@ -27,7 +28,25 @@ namespace Social.Api.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(RegisterUserRequest registerUser)
         {
+            UploadImageResponse resoponse = new UploadImageResponse();
+            if (registerUser.ProfilePicture != null)
+            {
+                var imageUploadCommand = new UploadImageCommand();
+                imageUploadCommand.ImageFile = registerUser.ProfilePicture;
+                var imageUploadResult = await _mediator.Send(imageUploadCommand);
+
+                if (imageUploadResult.IsError)
+                {
+                    return HandleErrorResponse(imageUploadResult.Errors);
+                }
+
+                resoponse = imageUploadResult.Payload;
+            }
             var command = _mapper.Map<RegisterIdentity>(registerUser);
+
+            command.ProfilePicturePublicId = resoponse.PublicId;
+            command.ProfilePictureUrl = resoponse.Url;
+
             var result = await _mediator.Send(command);
 
             if (result.IsError)

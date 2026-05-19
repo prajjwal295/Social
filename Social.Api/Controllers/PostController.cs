@@ -25,9 +25,13 @@ namespace Social.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllPosts()
+        [ValidateGuid("id")]
+        public async Task<IActionResult> GetAllPosts([FromQuery]string? id)
         {
-            var query = new GetAllPosts();
+            var query = new GetAllPosts
+            {
+                UserProfileId = id == null ? null : Guid.Parse(id)
+            };
             var response = await _mediator.Send(query);
 
             return response.IsError ? HandleErrorResponse(response.Errors) : Ok(_mapper.Map<List<PostResponse>>(response.Payload));

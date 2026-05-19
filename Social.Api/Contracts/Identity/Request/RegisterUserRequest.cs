@@ -21,11 +21,19 @@ namespace Social.Api.Contracts.Identity.Request
         [MinLength(3)]
         [MaxLength(50)]
         public string LastName { get;  set; }
+
+        [Required]
+        [EmailAddress]
         public string EmailAddress { get;  set; }
+
+        [Required]
+        [Phone]
         public string Phone { get;  set; }
+        
+        public IFormFile? ProfilePicture { get; set; }
 
         [Required]
         public DateTime DateOfBirth { get;  set; }
-        public string CurrentCity { get;  set; }
+        public string? CurrentCity { get;  set; }
     }
 }

@@ -19,5 +19,7 @@ namespace Social.Application.Identity.Commands
         public string Phone { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string CurrentCity { get; set; }
+        public string ProfilePictureUrl { get; set; } = string.Empty;
+        public string ProfilePicturePublicId { get; set; } = string.Empty;
     }
 }

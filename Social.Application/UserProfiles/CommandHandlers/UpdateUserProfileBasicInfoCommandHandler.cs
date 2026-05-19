@@ -42,7 +42,7 @@ namespace Social.Application.UserProfiles.CommandHandlers
                 }
 
                 var basicInfo = BasicInfo.CreateBasicInfo(request.FirstName, request.LastName, request.EmailAddress, request.Phone
-                    , request.DateOfBirth, request.CurrentCity);
+                    , request.DateOfBirth, request.CurrentCity,request.ProfilePicutreUrl , request.ProfilePicturePublicId);
 
                 userProfile.UpdateBasicInfo(basicInfo);
 

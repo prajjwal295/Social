@@ -12,5 +12,7 @@ namespace Social.Application.UserProfiles.Commands
         public string Phone { get;  set; }
         public DateTime DateOfBirth { get;  set; }
         public string CurrentCity { get;  set; }
+        public string ProfilePicutreUrl { get; private set; }
+        public string ProfilePicturePublicId { get; set; }
     }
 }

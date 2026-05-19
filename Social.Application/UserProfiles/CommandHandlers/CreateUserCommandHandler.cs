@@ -24,7 +24,7 @@ namespace Social.Application.UserProfiles.CommandHandlers
             var result = new OperationResult<UserProfile>();
             try
             {
-                var basicInfo = BasicInfo.CreateBasicInfo(request.FirstName, request.LastName, request.EmailAddress, request.Phone, request.DateOfBirth, request.CurrentCity);
+                var basicInfo = BasicInfo.CreateBasicInfo(request.FirstName, request.LastName, request.EmailAddress, request.Phone, request.DateOfBirth, request.CurrentCity, request.ProfilePicutreUrl , request.ProfilePicturePublicId);
 
                 var userProfile = UserProfile.CreateUserProfile(Guid.NewGuid().ToString(), basicInfo);
 

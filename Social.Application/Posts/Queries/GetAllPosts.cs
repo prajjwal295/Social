@@ -7,6 +7,8 @@ namespace Social.Application.Posts.Queries
 {
     public class GetAllPosts : IRequest<OperationResult<List<Post>>>, ICacheable
     {
+        public Guid? UserProfileId { get; set; }
+
         public bool BypassCache => false;
 
         public string CacheKey => $"GetAllPost";

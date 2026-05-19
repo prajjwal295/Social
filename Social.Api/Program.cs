@@ -1,5 +1,3 @@
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Social.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

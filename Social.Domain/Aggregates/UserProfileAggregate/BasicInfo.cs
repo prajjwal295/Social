@@ -12,6 +12,8 @@ namespace Social.Domain.Aggregates.UserProfileAggegate
         public string Phone { get; private set; }
         public DateTime DateOfBirth { get; private set; }
         public string CurrentCity { get; private set; }
+        public string ProfilePicutreUrl { get; private set; }
+        public string ProfilePicturePublicId { get; set; }
 
         /// <summary>
         /// factory Method
@@ -23,7 +25,7 @@ namespace Social.Domain.Aggregates.UserProfileAggegate
         /// <param name="dob"></param>
         /// <param name="currentCity"></param>
         /// <returns></returns>
-        public static BasicInfo CreateBasicInfo(string firstName, string lastName, string emailAddress, string phone, DateTime dob, string currentCity)
+        public static BasicInfo CreateBasicInfo(string firstName, string lastName, string emailAddress, string phone, DateTime dob, string currentCity, string profilePictureUrl, string publicId)
         {
             //todo : validation
             var validator = new BasicInfoValidator();
@@ -35,7 +37,9 @@ namespace Social.Domain.Aggregates.UserProfileAggegate
                 EmailAddress = emailAddress,
                 Phone = phone,
                 DateOfBirth = dob,
-                CurrentCity = currentCity
+                CurrentCity = currentCity,
+                ProfilePicutreUrl = profilePictureUrl,
+                ProfilePicturePublicId = publicId
             };
 
             var validationResult = validator.Validate(objToValidate);
